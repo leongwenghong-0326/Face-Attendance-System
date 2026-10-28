@@ -1,19 +1,32 @@
-# Apex Attendance - Facial Recognition Student Attendance System
-Enterprise-ready student attendance management platform with browser-based AI facial recognition, interactive kiosk station, and multi-portal academic administration.
+# Face-Attendance-System
+
+> **Apex Facial Recognition Attendance System**  
+> Enterprise-ready student attendance management platform with browser-based AI facial recognition, interactive kiosk station, and multi-portal academic administration.
+
+---
 
 ## 快速开始（XAMPP）
+
 1. 把项目放置在 `C:\xampp\htdocs\face_attendance_system`
+
 2. 复制 `.env.example` 为 `.env`，确认数据库配置（默认端口 `3307` 或 `3306`）
+
 3. 启动 XAMPP 的 **Apache** 与 **MySQL**
+
 4. 打开 phpMyAdmin 或 MySQL 终端，导入 `database/install.sql` 初始化数据库 `face_attendance_db`
+
 5. 浏览器访问：`http://localhost/face_attendance_system/public/`
+
 6. 使用管理员账号登录：`admin` / `password123`（或点击登录页下方 Quick Demo Fill 快捷填入）
+
 7. 在 **Student Management** 页面点击 **Register**，通过摄像头采集学生 3 组正面生物特征
+
 8. 点击顶部或侧边栏 **Launch Kiosk** 打开全屏智能打卡机，靠近摄像头即可完成秒级毫秒人脸考勤！
 
 ---
 
 ## Features
+
 - **Multi-Role Academic Portals:** Dedicated dashboards for Administrators, Teachers, and Students.
 - **Client-Side Edge AI Biometrics:** Real-time 68-point facial landmarks and 128-dimensional vector embedding powered by `face-api.js` without streaming unencrypted raw video.
 - **Autonomous Attendance Kiosk:** Full-screen reception kiosk with animated target HUD, visual feedback, live audio chimes, and automatic real-time recognition.
@@ -31,20 +44,21 @@ Enterprise-ready student attendance management platform with browser-based AI fa
 ## Screenshots
 
 | Login Page | Administrator Dashboard |
-|:---:|:---:|
+| :---: | :---: |
 | ![Login page](docs/screenshots/01-login.png) | ![Dashboard](docs/screenshots/02-dashboard.png) |
 
 | Student Management | Autonomous Attendance Kiosk |
-|:---:|:---:|
+| :---: | :---: |
 | ![Students list](docs/screenshots/03-students.png) | ![Kiosk](docs/screenshots/04-kiosk.png) |
 
 | Attendance Records & Audits | Biometric Face Enrollment |
-|:---:|:---:|
+| :---: | :---: |
 | ![Attendance logs](docs/screenshots/05-attendance.png) | ![Face Enrollment](docs/screenshots/06-face-register.png) |
 
 ---
 
 ## Folder structure
+
 ```
 face_attendance_system/
 ├── app/
@@ -79,6 +93,7 @@ face_attendance_system/
 ---
 
 ## 1. XAMPP setup
+
 1. Copy or clone this folder into `C:\xampp\htdocs\face_attendance_system`
 2. Start **Apache** and **MySQL** in your XAMPP Control Panel
 3. Open phpMyAdmin at `http://localhost/phpmyadmin/` or open MySQL CLI
@@ -106,10 +121,11 @@ face_attendance_system/
 ---
 
 ## 2. Preloaded Demo Accounts
+
 All preloaded demo users share the default password: **`password123`**
 
 | Role | Username | Email | Full Name / Class | Key Permissions |
-|:---|:---|:---|:---|:---|
+| :--- | :--- | :--- | :--- | :--- |
 | **Administrator** | `admin` | `admin@apex.edu` | System Administrator | Full access to settings, user management, kiosk, audit logs |
 | **Teacher** | `teacher1` | `alice@apex.edu` | Dr. Alice Johnson (CS Year 1 A) | Class attendance roster, student dossier, scan inspection |
 | **Teacher** | `teacher2` | `bob@apex.edu` | Prof. Bob Smith (DS Year 3 A) | Class attendance roster, student dossier, scan inspection |
@@ -122,7 +138,9 @@ All preloaded demo users share the default password: **`password123`**
 ---
 
 ## 3. Biometric Face Recognition Engine
+
 The biometric engine operates strictly inside the client's browser using HTML5 Canvas and WebGL:
+
 1. **Detection & Alignment:** Uses `tiny_face_detector` to locate faces in 60fps video streams.
 2. **Landmark Extraction:** Computes 68 precise 2D facial fiducial coordinates.
 3. **Descriptor Vectorization:** Generates a 128-element normalized floating-point array representing biometric facial geometry.
@@ -138,7 +156,9 @@ Neural weights are stored locally in `public/assets/models/`:
 ---
 
 ## 4. Attendance Kiosk & Punctuality Policy
+
 The Autonomous Kiosk (`/kiosk`) provides touchless attendance:
+
 - **Scan Cooldown:** After a student punches in, their ID enters a 300-second cooldown window to prevent double logging.
 - **Check-In vs Late:** Scans within class start time plus grace period are marked `checked_in`. Scans arriving after the grace period are automatically flagged `late`.
 - **Check-Out:** A subsequent scan after class end or during dismissal time records the `check_out` timestamp and updates daily duration.
@@ -147,6 +167,7 @@ The Autonomous Kiosk (`/kiosk`) provides touchless attendance:
 ---
 
 ## 5. Camera & WebRTC Permissions
+
 - **Localhost:** Modern browsers (Chrome, Edge, Firefox) grant camera permissions automatically on `http://localhost/` and `http://127.0.0.1/`.
 - **LAN / Network Hosting:** If accessing across Wi-Fi or local IP addresses (e.g. `http://192.168.1.100/`), browsers mandate **HTTPS** for `navigator.mediaDevices.getUserMedia()`.
 - **Testing on LAN without SSL:** You can whitelist your host in Chrome by opening:
@@ -156,12 +177,15 @@ The Autonomous Kiosk (`/kiosk`) provides touchless attendance:
 ---
 
 ## 6. Automated Testing Suite
+
 Run the built-in 16-point integration test suite via CLI:
+
 ```bash
 php tests/run_tests.php
 ```
 
 Expected output:
+
 ```text
 ========================================================
    APEX FACIAL ATTENDANCE SYSTEM - AUTOMATED TEST SUITE 
@@ -192,6 +216,7 @@ Expected output:
 ---
 
 ## System flow
+
 1. **Enrollment:** Administrator or Student captures 3 clear frontal face samples via webcam.
 2. **Descriptor Vault:** The 128-dimensional vectors are stored in `face_descriptors` linked to the student profile.
 3. **Kiosk Initialization:** The kiosk pre-caches all active student descriptors on boot.
@@ -203,6 +228,7 @@ Expected output:
 ---
 
 ## Security & Privacy notes
+
 - **Zero Raw Video Transmission:** Video streams are processed locally in browser RAM; only 128-d mathematical vectors are transmitted.
 - **Session Security:** Session ID regeneration upon login prevents session fixation attacks.
 - **Upload Directory Hardening:** `public/uploads/` is protected with `.htaccess` directives preventing PHP execution.
@@ -215,5 +241,3 @@ Expected output:
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-#   F a c e - A t t e n d a n c e - S y s t e m  
- 
