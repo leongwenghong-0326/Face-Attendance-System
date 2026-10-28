@@ -1,0 +1,394 @@
+/* =========================================================
+   Apex Attendance System - Core Modern Design System
+   ========================================================= */
+
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-subtle: #eff6ff;
+    --secondary: #64748b;
+    --success: #10b981;
+    --success-subtle: #ecfdf5;
+    --warning: #f59e0b;
+    --warning-subtle: #fffbeb;
+    --danger: #ef4444;
+    --danger-subtle: #fef2f2;
+    --dark: #0f172a;
+    --light: #f8fafc;
+    --sidebar-bg: #0f172a;
+    --sidebar-hover: #1e293b;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f1f5f9;
+    color: #334155;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sidebar Layout */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.app-sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    color: #f8fafc;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebar-brand {
+    padding: 1.25rem 1.5rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-item {
+    margin: 0.2rem 0.75rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.65rem 1rem;
+    color: #94a3b8;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    color: #ffffff;
+    background-color: var(--sidebar-hover);
+}
+
+.sidebar-link.active {
+    background-color: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+.sidebar-heading {
+    padding: 0.75rem 1.5rem 0.25rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.app-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.app-navbar {
+    background-color: #ffffff;
+    height: 64px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.app-content {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+/* Card Improvements */
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #ffffff;
+}
+
+.card:hover {
+    box-shadow: var(--card-shadow-hover);
+}
+
+.card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    border-top-left-radius: 0.75rem !important;
+    border-top-right-radius: 0.75rem !important;
+}
+
+/* Metric / Stat Cards */
+.stat-card {
+    border-left: 4px solid var(--primary);
+    border-radius: 0.75rem;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* Camera Preview & Radar Scanning Animation */
+.camera-container {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    background-color: #0f172a;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.camera-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: scaleX(-1); /* Mirror view for natural interaction */
+}
+
+.camera-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1); /* Mirror canvas to match video */
+    pointer-events: none;
+}
+
+.scan-radar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(37,99,235,0) 0%, rgba(37,99,235,0.85) 50%, rgba(37,99,235,0) 100%);
+    box-shadow: 0 0 12px #2563eb;
+    animation: radarSweep 2.2s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes radarSweep {
+    0% { top: 4%; opacity: 0.3; }
+    50% { opacity: 0.9; }
+    100% { top: 94%; opacity: 0.3; }
+}
+
+/* Kiosk Fullscreen Container */
+.kiosk-fullscreen {
+    min-height: 100vh;
+    background: radial-gradient(circle at 50% 10%, #1e293b 0%, #0f172a 100%);
+    color: #f8fafc;
+}
+
+/* Tables */
+.table th {
+    font-weight: 600;
+    color: #475569;
+    background-color: #f8fafc;
+    border-top: none;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table td.text-end,
+.table th.text-end {
+    white-space: nowrap;
+}
+
+.table .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+/* Badges */
+.badge {
+    padding: 0.4em 0.65em;
+    font-weight: 600;
+    border-radius: 0.375rem;
+}
+
+/* =========================================================
+   Mobile & Tablet Responsive System
+   ========================================================= */
+
+/* Mobile Sidebar Backdrop */
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 1040;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-backdrop.show {
+    display: block;
+    opacity: 1;
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* Tablet & Mobile Screens (< 992px) */
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        max-width: 85vw;
+        height: 100vh;
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        box-shadow: 4px 0 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .app-sidebar.show {
+        transform: translateX(0);
+    }
+
+    .app-main {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .app-navbar {
+        height: 58px;
+        padding: 0 1rem;
+    }
+
+    .app-content {
+        padding: 1.25rem 1rem;
+    }
+
+    .camera-container {
+        border-radius: 0.75rem;
+    }
+
+    /* Kiosk responsiveness on tablets */
+    .kiosk-fullscreen header {
+        padding: 0.75rem 1rem !important;
+    }
+}
+
+/* Small Mobile Screens (< 576px) */
+@media (max-width: 575.98px) {
+    .app-content {
+        padding: 1rem 0.75rem;
+    }
+
+    .app-navbar {
+        height: 54px;
+        padding: 0 0.75rem;
+    }
+
+    /* Compact Stat cards */
+    .stat-card .fs-4 {
+        font-size: 1.25rem !important;
+    }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    /* Compact table buttons */
+    .table td, .table th {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .table .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.78rem;
+    }
+
+    /* Kiosk responsiveness on mobile phones */
+    .kiosk-fullscreen {
+        padding: 0.5rem !important;
+    }
+
+    .kiosk-fullscreen header {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.5rem;
+    }
+
+    .kiosk-fullscreen header > div:first-child {
+        justify-content: flex-start;
+    }
+
+    .kiosk-fullscreen header > div:last-child {
+        justify-content: space-between;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 0.5rem;
+    }
+
+    #kiosk-clock {
+        font-size: 1.5rem !important;
+    }
+
+    .scan-radar {
+        height: 3px;
+    }
+}
+
+/* Touch device scroll smoothness */
+.table-responsive {
+    -webkit-overflow-scrolling: touch;
+}

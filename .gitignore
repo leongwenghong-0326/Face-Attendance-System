@@ -1,0 +1,48 @@
+# ==============================================================================
+# Security & Privacy .gitignore for Face Attendance System
+# ==============================================================================
+
+# Environment & Credentials (NEVER COMMIT SENSITIVE SECRETS)
+.env
+.env.*
+!.env.example
+
+# Sensitive Biometric & User Uploads (Strict Privacy)
+public/uploads/faces/*
+!public/uploads/faces/.gitkeep
+public/uploads/leaves/*
+!public/uploads/leaves/.gitkeep
+public/uploads/attendance/*
+!public/uploads/attendance/.gitkeep
+
+# Logs and Debug outputs
+*.log
+logs/
+app/storage/logs/*
+!app/storage/logs/.gitkeep
+
+# Temporary & Test artifact files
+tests/tmp/
+tmp/
+temp/
+
+# Database dumps and local backup files
+*.sql.bak
+*.sql.gz
+*.dump
+
+# Operating System junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor Configurations
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+nbproject/
+
+# Node Dependencies
+node_modules/
+
